@@ -15,7 +15,7 @@ To adhere to the EULA of Aseprite, this workflow does not upload the binary in a
 5. On every push to master and every day, the workflow will check for new Aseprite releases
         
 # Technical details
-This workflow follows the instructions as described at [Aseprite repo](https://github.com/aseprite/aseprite/blob/master/INSTALL.md)
+This workflow follows the instructions as described at [Aseprite repo](https://github.com/aseprite/aseprite/blob/main/INSTALL.md)
 
 1. Every day check if there is a new Aseprite release on GitHub (by comparing against cached version)
 2. If newer version then create a draft Release where the build job can put the binaries.
