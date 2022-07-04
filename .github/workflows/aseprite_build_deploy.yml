@@ -21,9 +21,6 @@ on:
             type: boolean
   schedule:
     - cron: '0 0 * * 5'
-  push:
-    branches:
-      - master
 
 env:
   BUILD_TYPE: Release
