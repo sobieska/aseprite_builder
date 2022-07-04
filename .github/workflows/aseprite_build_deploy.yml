@@ -156,7 +156,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: skia
-          key: skia-m102-${{ runner.os }}-cache
+          key: skia-m102-windows-latest-cache
           
       - name: Download Skia if not in cache
         if: steps.skia-cache.outputs.cache-hit != 'true'
@@ -220,7 +220,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: skia
-          key: skia-m102-${{ runner.os }}-cache
+          key: skia-m102-ubuntu-latest-cache
   
       - name: Download Skia if not in cache
         if: steps.skia-cache.outputs.cache-hit != 'true'
@@ -279,7 +279,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: skia
-          key: skia-m102-${{ runner.os }}-cache
+          key: skia-m102-macOS-latest-cache
           
       - name: Download Skia if not in cache
         if: steps.skia-cache.outputs.cache-hit != 'true'
