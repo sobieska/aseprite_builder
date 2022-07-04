@@ -259,7 +259,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Aseprite-${{ needs.check-version.outputs.latest_tag }}-linux
+          name: Aseprite-${{ needs.check-version.outputs.latest_tag }}-ubuntu
           path: aseprite/build/bin/
     
     
