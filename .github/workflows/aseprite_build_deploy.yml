@@ -349,8 +349,7 @@ jobs:
                 -DSKIA_DIR=../../skia \
                 -DSKIA_LIBRARY_DIR=../../skia/out/Release-x64 \
                 -DSKIA_LIBRARY=../../skia/out/Release-x64/libskia.a \
-                -G Ninja \
-                ..
+                -G Ninja ..
 
       - name: Run Ninja
         working-directory: aseprite/build
@@ -417,8 +416,7 @@ jobs:
                 -DSKIA_DIR=../../skia \
                 -DSKIA_LIBRARY_DIR=../../skia/out/Release-x64 \
                 -DSKIA_LIBRARY=../../skia/out/Release-x64/libskia.a \
-                -G Ninja \
-                ..
+                -G Ninja ..
 
       - name: Run Ninja
         working-directory: aseprite/build
