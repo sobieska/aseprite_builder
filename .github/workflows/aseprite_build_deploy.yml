@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
         run_windows:
-            description: 'Build for Windows?'
+            description: 'Build for Windows'
             required: true
             type: boolean
         run_linux:
-            description: 'Build for Linux?'
+            description: 'Build for Ubuntu'
             required: true
             type: boolean
         run_mac:  
-            description: 'Build for Mac?'
+            description: 'Build for Mac'
             required: true
             type: boolean
   schedule:
@@ -208,7 +208,7 @@ jobs:
 
 
   build-aseprite-linux:
-    name: Build Aseprite for Linux
+    name: Build Aseprite for Ubuntu
     needs: check-version
     if: ${{ inputs.run_linux }}
     runs-on: ubuntu-latest
