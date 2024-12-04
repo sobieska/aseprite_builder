@@ -45,7 +45,7 @@ jobs:
         echo "::set-output name=version_info::${VERSION_INFO}"
     - name: Load version from cache
       id: version_check
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: ${{ steps.version_info.outputs.latest_tag }}.txt
         key: cached_version
@@ -66,7 +66,7 @@ jobs:
     steps:
       - name: (Windows) Install dependencies
         if: matrix.os == 'windows-latest'
-        uses: seanmiddleditch/gha-setup-ninja@v3
+        uses: seanmiddleditch/gha-setup-ninja@v4
       - name: (Ubuntu) Install dependencies
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt install -y cmake ninja-build libxcursor-dev libxi-dev libgl1-mesa-dev clang
@@ -76,7 +76,7 @@ jobs:
 
       - name: Get Skia from cache
         id: skia-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: skia
           key: skia-m102-${{ matrix.os }}-cache
@@ -137,7 +137,7 @@ jobs:
         working-directory: aseprite/build/bin
         run: echo '# This file is here so Aseprite behaves as a portable program' > aseprite.ini
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Aseprite-${{ needs.check-version.outputs.latest_tag }}
           path: aseprite/build/bin/
@@ -151,11 +151,11 @@ jobs:
 
     steps:
       - name: (Windows) Install dependencies
-        uses: seanmiddleditch/gha-setup-ninja@v3
+        uses: seanmiddleditch/gha-setup-ninja@v4
 
       - name: Get Skia from cache
         id: skia-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: skia
           key: skia-m102-windows-latest-cache
@@ -200,7 +200,7 @@ jobs:
         run: echo '# This file is here so Aseprite behaves as a portable program' > aseprite.ini
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Aseprite-${{ needs.check-version.outputs.latest_tag }}
           path: aseprite/build/bin/
@@ -219,7 +219,7 @@ jobs:
 
       - name: Get Skia from cache
         id: skia-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: skia
           key: skia-m102-ubuntu-latest-cache
@@ -259,7 +259,7 @@ jobs:
         run: echo '# This file is here so Aseprite behaves as a portable program' > aseprite.ini
         
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Aseprite-${{ needs.check-version.outputs.latest_tag }}-ubuntu
           path: aseprite/build/bin/
@@ -278,7 +278,7 @@ jobs:
 
       - name: Get Skia from cache
         id: skia-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: skia
           key: skia-m102-macOS-latest-cache
@@ -325,7 +325,7 @@ jobs:
         run: echo '# This file is here so Aseprite behaves as a portable program' > aseprite.ini
         
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Aseprite-${{ needs.check-version.outputs.latest_tag }}-macOS
           path: aseprite/build/bin/
