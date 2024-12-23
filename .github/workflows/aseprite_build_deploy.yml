@@ -34,15 +34,18 @@ jobs:
     - name: Get latest version info
       id: version_info
       run: |
-        data=$(curl -sL https://api.github.com/repos/aseprite/aseprite/releases/latest)
-        LATEST_TAG=$(echo "${data}" | jq -r '.tag_name')
+        data=$(curl -sL https://api.github.com/repos/aseprite/aseprite/releases)
+        LATEST_TAG=$(echo "${data}" | jq -r '[.[].tag_name|select(startswith("v1.3"))][0]')
+        data=$(curl -sL https://api.github.com/repos/aseprite/aseprite/releases/tags/$LATEST_TAG)
         DOWNLOAD_URL=$(echo "${data}" | jq -r '.assets[].browser_download_url')
         VERSION_INFO=$(echo "${data}" | jq -r '.body')
 
         echo "${LATEST_TAG}" > ${LATEST_TAG}.txt
-        echo "::set-output name=latest_tag::${LATEST_TAG}"
-        echo "::set-output name=download_url::${DOWNLOAD_URL}"
-        echo "::set-output name=version_info::${VERSION_INFO}"
+        echo "latest_tag=${LATEST_TAG}" >> $GITHUB_OUTPUT
+        echo "download_url=${DOWNLOAD_URL}" >> $GITHUB_OUTPUT
+        echo "version_info<<EOF" >> $GITHUB_OUTPUT
+        echo "$VERSION_INFO" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
     - name: Load version from cache
       id: version_check
       uses: actions/cache@v4
@@ -69,21 +72,21 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@v4
       - name: (Ubuntu) Install dependencies
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt install -y cmake ninja-build libxcursor-dev libxi-dev libgl1-mesa-dev clang
+        run: sudo apt install -y cmake ninja-build libxcursor-dev libxi-dev libgl1-mesa-dev
       - name: (macOS) Install dependencies
         if: matrix.os == 'macOS-latest'
         run: brew install ninja p7zip
 
-      - name: Get Skia from cache
-        id: skia-cache
-        uses: actions/cache@v4
-        with:
-          path: skia
-          key: skia-m102-${{ matrix.os }}-cache
-      - name: Download Skia if not in cache
-        if: steps.skia-cache.outputs.cache-hit != 'true'
+      - name: Download Skia
+        if: contains(needs.check-version.outputs.latest_tag, 'beta') == false
         run: |
           curl -o Skia-${{ runner.os }}-Release-X64.zip -L https://github.com/aseprite/skia/releases/download/m102-861e4743af/Skia-${{ runner.os }}-Release-X64.zip
+          unzip Skia-${{ runner.os }}-Release-X64.zip -d skia
+
+      - name: Download Skia for beta
+        if: contains(needs.check-version.outputs.latest_tag, 'beta')
+        run: |
+          curl -o Skia-${{ runner.os }}-Release-X64.zip -L https://github.com/aseprite/skia/releases/download/m124-08a5439a6b/Skia-${{ runner.os }}-Release-X64.zip
           unzip Skia-${{ runner.os }}-Release-X64.zip -d skia
 
       - name: Download Aseprite release
