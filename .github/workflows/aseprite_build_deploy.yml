@@ -235,7 +235,7 @@ jobs:
   
     steps:
       - name: (Ubuntu) Install dependencies
-        run: sudo apt install -y cmake ninja-build libxcursor-dev libxi-dev libgl1-mesa-dev clang
+        run: sudo apt install -y cmake ninja-build libxcursor-dev libxi-dev libgl1-mesa-dev clang libfontconfig1-dev
 
       - name: Get Skia from cache
         id: skia-cache
